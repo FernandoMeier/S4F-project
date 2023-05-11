@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Flashcards</title>
+    <style>
+        body {
+            background-color: rgb(246, 247, 251);
+        }
+
+        .card-container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(.37, -0.02, .69, 1.8);
+        }
+
+        .card.flipped {
+            transform: rotateX(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: black;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-back {
+            transform: rotateX(180deg);
+            background-color: white;
+        }
+
+        .UI {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #buttons {
+            width: max-content;
+        }
+
+        * {
+            user-select: none;
+            font-family: sans-serif;
+            font-weight: lighter;
+        }
+
+        #backwards, #forwards {
+            width: 400px;
+            height: 50px;
+            max-width: 400px;
+            border: 0;
+            background-color: rgb(255, 255, 255);
+            text-align: center;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            border-radius: 7px;
+        }
+
+        #favDiv {
+            align-items: start;
+            justify-content: end;
+            background-color: rgba(255, 255, 255, 0);
+        }
+
+        #unselected {
+            height: 20px;
+            width: 20px;
+        }
+
+        .fav {
+            background-color: rgba(255, 255, 255, 0);
+            border: 0;
+            max-height: 20px;
+            max-width: 20px;
+            padding: 0;
+        }
+
+        .fav > img {
+            max-height: 20px;
+            max-width: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="UI">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-front">
+                    <p id="front"><!--"key" value is inserted here--></p>
+                </div>
+                <div class="card-front" id="favDiv">
+                    <button class="fav"><img src="./star.png"></button><!--Star icon by https://icons8.com-->
+                </div>
+                <div class="card-back">
+                    <p id="back"><!--"value" value is inserted here--></p>
+                </div>
+                <div class="card-back" id="favDiv">
+                    <button class="fav"><img src="./star.png"></button><!--Star icon by https://icons8.com-->
+                </div>
+            </div>
+        </div>
+        <div id="buttons">
+            <button id="backwards">Previous card</button>
+            <button id="forwards">Next card</button>
+        </div>
+
+
+    </div>
+
+
+    <script>
+        const words = [
+            { "Mitochondria": "Powerhouse of the cell" },
+            { "Matrix": "Space inside inner membrane of mitochondria" },
+            { "DNA": "Deoxyribonucleic acid, contains genetic instructions" },
+            { "Photosynthesis": "Converting sunlight to food with chlorophyll" }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentCard = 0;
+
+            const word = {
+                key: "definition",
+                value: "value",
+                starred: false
+            }
+
+            let card = document.querySelector(".card");
+            let fbtn = document.getElementById("forwards");
+            let bbtn = document.getElementById("backwards");
+
+            let front = document.getElementById("front");
+            let back = document.getElementById("back");
+
+            const btns = document.getElementsByClassName("fav")
+
+            front.innerText = Object.keys(words[currentCard]);
+            back.innerText = Object.values(words[currentCard]);
+
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].addEventListener("click", () => {
+                    console.log("Success");
+                })
+            }
+
+            card.addEventListener("click", function () {
+                card.classList.toggle("flipped");
+            });
+
+            fbtn.addEventListener("click", () => {
+                if (currentCard + 1 < words.length) {
+                    currentCard++;
+                    front.innerText = Object.keys(words[currentCard]);
+                    back.innerText = Object.values(words[currentCard]);
+                }
+            });
+
+            bbtn.addEventListener("click", () => {
+                if (currentCard > 0) {
+                    currentCard--;
+                    front.innerText = Object.keys(words[currentCard]);
+                    back.innerText = Object.values(words[currentCard]);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>
