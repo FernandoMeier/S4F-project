@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Reading Test</title>
+
+    <style>
+        #drop-area {
+            width: 90vw;
+            height: 20vh;
+            border: 2px black;
+            border-style: dashed;
+            text-align: center;
+            background-color: rgba(125, 120, 120, 0);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="drop-area">
+        <p>Drop file</p>
+    </div>
+    <form>
+        <label for="excelfile">Select file to read</label><br>
+        <input type="file" name="excelfile" id="excelfile" accept=".xlsx">
+    </form>
+
+    <div id="contents">
+    </div>
+</body>
+<script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+<script>
+    const droparea = document.getElementById("drop-area");
+    const fileInput = document.getElementById("excelfile");
+    const contents = document.getElementById("contents")
+
+    droparea.addEventListener("dragover", (event) => {
+        event.stopPropagation()
+        event.preventDefault()
+        droparea.style.backgroundColor = "rgba(125, 120, 120, 100)"
+        event.dataTransfer.dropEffect = "copy"
+    })
+
+    droparea.addEventListener("drop", (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        droparea.style.backgroundColor = "rgba(125, 120, 120, 0)"
+    })
+
+    droparea.addEventListener("dragleave", () => {
+        droparea.style.backgroundColor = "rgba(125, 120, 120, 0)"
+    })
+
+    fileInput.addEventListener("change", (event) => {
+        let file = event.target.files[0];
+        let reader = new FileReader()
+        let words = []
+
+        reader.onload = (event) => {
+            let data = new Uint8Array(event.target.result);
+            let workbook = XLSX.read(data, { type: 'array' });
+
+            let worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            let columnA = excelData.map(row => row[0])
+            let columnB = excelData.map(row => row[1])
+
+            for (let i = 0; i < columnA.length; i++) {
+                let row = `${columnA[i]}: ${columnB[i]}`
+                let r = columnA[i]
+                let v = columnB[i]
+
+                newWord = {
+                    word: r,
+                    definition: v
+                }
+                words = [...words, newWord]
+            }
+            console.log(words[0]);
+        }
+
+        reader.readAsArrayBuffer(file);
+    })
+</script>
+
+</html>
