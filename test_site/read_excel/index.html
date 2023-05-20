@@ -65,22 +65,17 @@
 
             let worksheet = workbook.Sheets[workbook.SheetNames[0]];
             let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-            let columnA = excelData.map(row => row[0])
-            let columnB = excelData.map(row => row[1])
-
-            for (let i = 0; i < columnA.length; i++) {
-                let row = `${columnA[i]}: ${columnB[i]}`
-                let r = columnA[i]
-                let v = columnB[i]
-
+           
+            excelData.forEach(WSet => {
+                let r = WSet[0]
+                let v = WSet[1]
                 newWord = {
-                    word: r,
-                    definition: v
+                    [r]: v
                 }
                 words = [...words, newWord]
-            }
-            console.log(words[0]);
+            });
+
+            console.log(words)
         }
 
         reader.readAsArrayBuffer(file);

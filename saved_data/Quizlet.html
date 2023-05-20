@@ -45,38 +45,139 @@
             justify-content: center;
         }
 
-        button {
+        #addNewWord {
             width: 100px;
             height: 40px;
+            background-color: #423ed8;
+            margin-top: 15px;
+            margin-right: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+
+        .qdiv {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            width: 1180px;
+            height: 180px;
+            background: #2E3856;
+            border-radius: 8px;
+        }
+
+        .cardNum {
+            background: #2E3856;
+            box-sizing: border-box;
+            width: 1181px;
+            height: 62px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+            border-radius: 8px 8px 0px 0px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .cardNum>p {
+            background: #2E3856;
+            padding-left: 24px;
+        }
+
+        .cardCont {
+            display: flex;
+            justify-content: center;
+            width: 1181px;
+            height: 118px;
+            background: #2E3856;
+            border-radius: 0px 0px 8px 8px;
+        }
+
+        .delete {
+            position: absolute;
+            left: 92%;
+            background-color: rgba(0, 0, 0, 0);
+        }
+
+        #textinput {
+            background-color: rgba(0, 0, 0, 0);
+            border-top: 0;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 2px solid white;
+            margin: 24px;
+            width: 45%;
+            transition: 150ms ease-out;
+        }
+
+        #textinput:focus {
+            outline: none;
+            border-bottom: 4px solid yellow;
+        }
+
+        #listingDiv {
+            display: flex;
+            flex-direction: column;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <table>
-            <tr>
-                <th>Word</th>
-                <th>Definition</th>
-            </tr>
-            <tr>
-                <td><input type="text" placeholder="Word1"></td>
-                <td><input type="text" placeholder="Definition1"></td>
-            </tr>
-            <tr>
-                <td><input type="text" placeholder="Word2"></td>
-                <td><input type="text" placeholder="Definition2"></td>
-            </tr>
-            <tr>
-                <td><input type="text" placeholder="Word3"></td>
-                <td><input type="text" placeholder="Definition3"></td>
-            </tr>
-        </table>
+    <div id="listingDiv">
+        <h2>New Set</h2>
+        <p id="elems">1 Elements</p>
+        <div class="qdiv">
+            <div class="cardNum">
+                <p>1</p>
+                <button class="delete"><img src="../imgs/icons8-löschen-24.png"></button>
+            </div>
+            <div class="cardCont">
+                <input type="text" name="word" id="textinput" placeholder="Word">
+                <input type="text" name="def" id="textinput" placeholder="Definition">
+            </div>
+        </div>
+
     </div>
     <div>
-        <button>Add new</button>
+        <button id="addNewWord">Add new</button>
         <input type="submit" value="Create">
     </div>
 </body>
 
+<script>
+    const newWord = document.getElementById("addNewWord")
+    const wordList = document.getElementById("wordList")
+    const wordDiv = document.getElementById("listingDiv")
+    const deletBtn = document.getElementsByClassName("delete")
+    const elems = document.getElementsByClassName("elems")
+
+    let val = 2;
+    updateDelete(0)
+
+    newWord.addEventListener("click", () => {
+        const newDiv = document.createElement("div")
+        newDiv.classList.add("qdiv")
+
+        const newHead = document.createElement("div")
+        newHead.classList.add("cardNum")
+        newHead.innerHTML = `<p>${val}</p> <button class="delete"><img src="../imgs/icons8-löschen-24.png"></button>`
+
+        const newContent = document.createElement("div")
+        newContent.classList.add("cardCont")
+        newContent.innerHTML = `<input type="text" name="word" id="textinput" placeholder="Word">
+            <input type="text" name="def" id="textinput" placeholder="Definition">`
+
+        newDiv.appendChild(newHead)
+        newDiv.appendChild(newContent)
+        wordDiv.appendChild(newDiv)
+        updateDelete(val - 1)
+        val++;
+    })
+
+    function updateDelete(val) {
+        deletBtn[val].addEventListener("click", () => {
+            alert("hehehehe")
+        })
+    }
+</script>
 </html>
