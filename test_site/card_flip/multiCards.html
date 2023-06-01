@@ -112,6 +112,20 @@
             max-width: 20px;
         }
     </style>
+    <nav>
+        <a href="../../home.html">
+            <button id="nav-btn">Home*</button>
+        </a>
+        <a href="../../saved_data/Quizlet.html">
+            <button id="nav-btn">Words*</button>
+        </a>
+        <a href="../../test_site/read_excel/index.html">
+            <button id="nav-btn">excel reader*</button>
+        </a>
+        <a href="#" id="nav-btn">
+            <button>Flashcards*</button>
+        </a>
+    </nav>
 </head>
 
 <body>
@@ -142,123 +156,12 @@
 
 
     <script>
-        const words = [
-            { "Mitochondria": "Powerhouse of the cell" },
-            { "Matrix": "Space inside inner membrane of mitochondria" },
-            { "DNA": "Deoxyribonucleic acid, contains genetic instructions" },
-            { "Photosynthesis": "Converting sunlight to food with chlorophyll" }
-        ];
+        const words = JSON.parse(sessionStorage.getItem("words"));
 
-        const U11 = [
-            { achievement: "Leistung, Erfolg, Errungenschaft" },
-            { "anxiety": "Sorge, Angst" },
-            { "associate with": "verbinden, assoziieren" },
-            { "association": "Verbindung, Assoziation" },
-            { "bean": "Bohne" },
-            { "bizarre": "bizarr" },
-            { "brag": "prahlen, angeben" },
-            { "boast": "prahlen" },
-            { "brainwave": "Gehirnwelle" },
-            { "breadth": "Breite; Ausdehnung" },
-            { "breakdown": "Scheitern; Zusammenbruch" },
-            { "breakthrough": "Durchbruch" },
-            { "button": "Knopf" },
-            { "buzz": "summen" },
-            { "by-product": "Nebenprodukt" },
-            { "check-up": "(Kontroll-) Untersuchung" },
-            { "childish": "kindisch" },
-            { "childlike": "kindlich" },
-            { "comeback": "Comeback" },
-            { "composition": "Komposition" },
-            { "condition": "Zustand, Befinden, auch: Krankheit" },
-            { "contestant": "Wettbewerbsteilnehmer" },
-            { "contest": "Wettbewerb" },
-            { "deaf": "taub" },
-            { "densely": "dicht" },
-            { "digestive tract": "Verdauungstrakt" },
-            { "discovery": "Entdeckung" },
-            { "do up the buttons": "zuknüpfen" },
-            { "dominant": "dominant" },
-            { "downfall": "Untergang" },
-            { "draw": "Unentschieden" },
-            { "economic": "ökonomisch, wirtschaftlich" },
-            { "economical": "sparsam, ökonomisch" },
-            { "enhance": "verbessern, erhöhen" },
-            { "excrete": "ausscheiden" },
-            { "feedback": "Rückmeldung" },
-            { "fly swatter": "Fliegenklatsche" },
-            { "follicle": "Follikel" },
-            { "form": "Lebensform" },
-            { "give or take": "plus/minus, mehr oder weniger" },
-            { "groggy": "angeschlagen" },
-            { "ground sb": "jdm Hausarrest erteilen" },
-            { "hideous": "abscheulich, grauenhaft, hässlich" },
-            { "hideout": "Versteck" },
-            { "hit and miss": "zufällig, Glücksache (sein)" },
-            { "hypothesize": "annehmen, eine Hypothese aufstellen" },
-            { "hypothetical": "hypothetisch, theoretisch" },
-            { "illegible": "unleserlich" },
-            { "inconsistency": "Widersprüchlichkeit" },
-            { "insensible": "unvernünftig, bewusstlos" },
-            { "insensitive": "gefühllos, unsensibel" },
-            { "intolerable": "unerträglich" },
-            { "intolerant": "unverträglich, allergisch, intolerant" },
-            { "itchy": "juckend" },
-            { "lens": "Linse" },
-            { "legible": "lesbar" },
-            { "medieval": "mittelalterlich" },
-            { "mindboggling": "unglaublich" },
-            { "mite": "Milbe" },
-            { "monk": "Mönch" },
-            { "monstrous": "monströs, ungeheuerlich" },
-            { "munch": "futtern" },
-            { "neurological": "neurologisch" },
-            { "neuroscientist": "Neurowissenschaftler*in, Hirnforscher*in" },
-            { "origin": "Herkunft, Ursprung" },
-            { "outbreak": "Ursprung" },
-            { "outcome": "Ergebnis" },
-            { "outlook": "Aussicht(en)" },
-            { "painstakingly": "mühsam" },
-            { "pearl": "Perle" },
-            { "perception": "Wahrnehmung, Empfindung" },
-            { "postpone": "verschieben, aufschieben, vertagen" },
-            { "presumably": "vermutlich" },
-            { "process": "verarbeiten" },
-            { "proper": "richtig" },
-            { "random": "zufällig" },
-            { "ready-made": "gebrauchsfertig" },
-            { "recurring": "wiederkehrend" },
-            { "refuse": "Abfall" },
-            { "rehearse": "proben" },
-            { "sack": "feuern" },
-            { "scabies": "Krätze" },
-            { "sensible": "vernünftig, sinnvoll, gescheit" },
-            { "sensitive": "empfindlich" },
-            { "signal": "Signal" },
-            { "sink or swim": "ganz auf sich alleine gestellt sein" },
-            { "species": "Spezies" },
-            { "stimulate": "anregen, stimulieren" },
-            { "subconscious": "Unterbewusstsein" },
-            { "swat": "totschlagen" },
-            { "takeaway": "(etw.) zum Mitnehmen" },
-            { "tedious": "ermüdend" },
-            { "tense": "anspannen" },
-            { "thread": "Faden" },
-            { "transcribe": "transkribieren" },
-            { "trick": "täuschen" },
-            { "true": "wahr" },
-            { "truthful": "ehrlich" },
-            { "unattended": "unbeaufsichtigt, unbegleitet" },
-            { "unreadable": "schwer zu lesen, schwierig" },
-            { "urgently": "dringend" },
-            { "vast": "enorm" },
-            { "vision": "Vision, Traumbild" },
-            { "vividly": "lebhaft, lebendig" },
-            { "wait and see": "abwarten (und Tee trinken)" },
-            { "weapon": "Waffe" },
-            { "weary": "müde, erschöpft" },
-            { "worst-case scenario": "ungünstigstes mögliches Szenario" }
-        ];
+        if (!words) {
+            alert("No words found, redirecting to home page. to add words go 'to excel reader*' or 'words*'");
+            window.location.href = "../../home.html";
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             let currentCard = 0;
@@ -278,8 +181,8 @@
 
             const btns = document.getElementsByClassName("fav")
 
-            front.innerText = Object.keys(U11[currentCard]);
-            back.innerText = Object.values(U11[currentCard]);
+            front.innerText = Object.keys(words[currentCard]);
+            back.innerText = Object.values(words[currentCard]);
 
             for (let i = 0; i < btns.length; i++) {
                 btns[i].addEventListener("click", () => {
@@ -292,11 +195,11 @@
             });
 
             fbtn.addEventListener("click", () => {
-                if (currentCard + 1 < U11.length) {
+                if (currentCard + 1 < words.length) {
                     currentCard++;
                     card.classList.remove("flipped")
-                    front.innerText = Object.keys(U11[currentCard]);
-                    back.innerText = Object.values(U11[currentCard]);
+                    front.innerText = Object.keys(words[currentCard]);
+                    back.innerText = Object.values(words[currentCard]);
                 }
             });
 
@@ -304,8 +207,8 @@
                 if (currentCard > 0) {
                     currentCard--;
                     card.classList.remove("flipped")
-                    front.innerText = Object.keys(U11[currentCard]);
-                    back.innerText = Object.values(U11[currentCard]);
+                    front.innerText = Object.keys(words[currentCard]);
+                    back.innerText = Object.values(words[currentCard]);
                 }
             });
         });

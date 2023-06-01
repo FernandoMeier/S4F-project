@@ -16,7 +16,10 @@ app.use(session({
     cookie: {}
 }))
 
-words = []
+words = [
+    { "word": "definition" },
+    { "word2": "definition2" }
+]
 
 app.get('/', (req, res) => {
     res.send("Hello World")

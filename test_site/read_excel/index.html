@@ -17,6 +17,20 @@
             background-color: rgba(125, 120, 120, 0);
         }
     </style>
+    <nav>
+        <a href="../../home.html">
+            <button id="nav-btn">Home*</button>
+        </a>
+        <a href="../../saved_data/Quizlet.html">
+            <button id="nav-btn">Words*</button>
+        </a>
+        <a href="#">
+            <button id="nav-btn">excel reader*</button>
+        </a>
+        <a href="../../test_site/card_flip/multiCards.html">
+            <button id="nav-btn">Flashcards*</button>
+        </a>
+    </nav>
 </head>
 
 <body>
@@ -46,17 +60,10 @@
     })
 
     droparea.addEventListener("drop", (event) => {
-        event.stopPropagation();
-        event.preventDefault();
+        event.stopPropagation()
+        event.preventDefault()
         droparea.style.backgroundColor = "rgba(125, 120, 120, 0)"
-    })
-
-    droparea.addEventListener("dragleave", () => {
-        droparea.style.backgroundColor = "rgba(125, 120, 120, 0)"
-    })
-
-    fileInput.addEventListener("change", (event) => {
-        let file = event.target.files[0];
+        let file = event.dataTransfer.files[0];
         let reader = new FileReader()
         let words = []
 
@@ -92,6 +99,51 @@
             })
         }
         reader.readAsArrayBuffer(file);
+    })
+
+    droparea.addEventListener("dragleave", () => {
+        droparea.style.backgroundColor = "rgba(125, 120, 120, 0)"
+    })
+
+    fileInput.addEventListener("change", (event) => {
+        let file = event.target.files[0];
+        let reader = new FileReader()
+        let words = []
+
+        reader.onload = (event) => {
+            let data = new Uint8Array(event.target.result);
+            let workbook = XLSX.read(data, { type: 'array' });
+
+            let worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+            excelData.forEach(WSet => {
+                let r = WSet[0]
+                let v = WSet[1]
+                newWord = {
+                    [r]: v
+                }
+                words = [...words, newWord]
+            });
+            sessionStorage.setItem("words", JSON.stringify(words))
+
+            let wordList = document.getElementById("wordList")
+
+            words.forEach(word => {
+                let row = document.createElement("tr")
+                let cell1 = document.createElement("td")
+                let cell2 = document.createElement("td")
+
+                cell1.innerHTML = Object.keys(word)
+                cell2.innerHTML = Object.values(word)
+
+                row.appendChild(cell1)
+                row.appendChild(cell2)
+                wordList.appendChild(row)
+            })
+        }
+        reader.readAsArrayBuffer(file);
+        sessionStorage.removeItem("words")
     })
 </script>
 
