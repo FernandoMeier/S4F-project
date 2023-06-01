@@ -16,11 +16,19 @@ app.use(session({
     cookie: {}
 }))
 
+words = []
+
 app.get('/', (req, res) => {
     res.send("Hello World")
 })
 
+app.get('/words', (req, res) => {
+    res.send(words)
+})
 
+app.post('/words', (req, res) => {
+    words.push(req.body.word)
+})
 
 app.listen(port, () => {
     console.log(`Backend server running on port ${port}`)

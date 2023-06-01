@@ -29,6 +29,7 @@
     </form>
 
     <div id="contents">
+        <table id="wordList"></table>
     </div>
 </body>
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
@@ -65,7 +66,7 @@
 
             let worksheet = workbook.Sheets[workbook.SheetNames[0]];
             let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-           
+
             excelData.forEach(WSet => {
                 let r = WSet[0]
                 let v = WSet[1]
@@ -75,9 +76,21 @@
                 words = [...words, newWord]
             });
 
-            console.log(words)
-        }
+            let wordList = document.getElementById("wordList")
 
+            words.forEach(word => {
+                let row = document.createElement("tr")
+                let cell1 = document.createElement("td")
+                let cell2 = document.createElement("td")
+
+                cell1.innerHTML = Object.keys(word)
+                cell2.innerHTML = Object.values(word)
+
+                row.appendChild(cell1)
+                row.appendChild(cell2)
+                wordList.appendChild(row)
+            })
+        }
         reader.readAsArrayBuffer(file);
     })
 </script>
