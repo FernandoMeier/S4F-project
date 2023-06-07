@@ -6,35 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizlet</title>
+    <link rel="stylesheet" href="../nav_style.css">
     <style>
         * {
             font-family: sans-serif;
             font-weight: lighter;
-            background-color: #0a092d;
-            color: white;
         }
 
         button {
             border: 0;
-        }
-
-        td>input {
-            background-color: rgba(0, 0, 0, 0);
-            width: 100%;
-            border-top: 0;
-            border-left: 0;
-            border-right: 0;
-            border-bottom: 2px solid white;
-        }
-
-        td {
-            background-color: #2e3856;
-            padding: 10px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 70%;
         }
 
         div {
@@ -48,7 +28,8 @@
         #addNewWord {
             width: 100px;
             height: 40px;
-            background-color: #423ed8;
+            background-color: #4255ff;
+            color: white;
             margin-top: 15px;
             margin-right: 15px;
             border-radius: 8px;
@@ -63,16 +44,16 @@
             margin-top: 15px;
             width: 1180px;
             height: 180px;
-            background: #2E3856;
+            background: #fff;
             border-radius: 8px;
         }
 
         .cardNum {
-            background: #2E3856;
+            background: #fff;
             box-sizing: border-box;
             width: 1181px;
             height: 62px;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #F6F7FB;
             border-radius: 8px 8px 0px 0px;
             display: flex;
             align-items: center;
@@ -80,7 +61,7 @@
         }
 
         .cardNum>p {
-            background: #2E3856;
+            background: #fff;
             padding-left: 24px;
         }
 
@@ -89,7 +70,7 @@
             justify-content: center;
             width: 1181px;
             height: 118px;
-            background: #2E3856;
+            background: #fff;
             border-radius: 0px 0px 8px 8px;
         }
 
@@ -104,7 +85,7 @@
             border-top: 0;
             border-left: 0;
             border-right: 0;
-            border-bottom: 2px solid white;
+            border-bottom: 2px solid black;
             margin: 24px;
             width: 45%;
             transition: 150ms ease-out;
@@ -113,6 +94,10 @@
         #textinput:focus {
             outline: none;
             border-bottom: 4px solid yellow;
+        }
+
+        #textinput::placeholder {
+            font-weight: 500;
         }
 
         #listingDiv {
@@ -127,104 +112,171 @@
         img {
             background-color: rgba(0, 0, 0, 0);
         }
+
+        .delete {
+            background-image: url("../../imgs/delete_dark.png");
+            background-size: cover;
+            width: 30px;
+            height: 30px;
+            border: 0;
+        }
     </style>
     <nav>
-        <a href="../home.html">
-            <button id="nav-btn">Home*</button>
-        </a>
-        <a href="#">
-            <button id="nav-btn">Words*</button>
-        </a>
-        <a href="../test_site/read_excel/index.html">
-            <button id="nav-btn">excel reader*</button>
-        </a>
-        <a href="../test_site/card_flip/multiCards.html">
-            <button id="nav-btn">Flashcards*</button>
-        </a>
+        <ul>
+            <li>
+                <a href="../../home.html">
+                    Home*
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Words*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/read_excel/index.html">
+                    Excel reader*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/card_flip/multiCards.html">
+                    Flashcards*
+                </a>
+            </li>
+            <li>
+                <a href="write/index.html">
+                    Write*
+                </a>
+            </li>
+        </ul>
     </nav>
 </head>
 
 <body>
     <h2>New Set</h2>
     <p id="elems">0 Elements</p>
-    <div id="listingDiv"></div>
+    <div id="listingDiv">
+        
+    </div>
     <div>
         <button id="addNewWord">Add new</button>
-        <input type="submit" value="Save">
+        <button id="saveBtn">Save</button>
     </div>
 </body>
 
 <script>
-    const newWord = document.getElementById("addNewWord")
-    const wordList = document.getElementById("wordList")
-    const wordDiv = document.getElementById("listingDiv")
-    const elems = document.getElementById("elems")
-    const deletBtn = document.getElementsByClassName("delete")
+    // Get necessary elements
+    const addNewWordButton = document.getElementById("addNewWord");
+    const listingDiv = document.getElementById("listingDiv");
 
-    let val = 1;
+    // Function to create a new card
+    function createCard(index) {
+      const newCard = document.createElement("div");
+      newCard.classList.add("qdiv");
 
-    let words = JSON.parse(sessionStorage.getItem("words"))
+      const cardNum = document.createElement("div");
+      cardNum.classList.add("cardNum");
+      const cardIdParagraph = document.createElement("p");
+      cardIdParagraph.classList.add("id");
+      cardIdParagraph.innerText = index + 1;
+      cardNum.appendChild(cardIdParagraph);
 
+      const deleteButton = document.createElement("button");
+      deleteButton.classList.add("delete");
+      //const deleteImage = document.createElement("img");
+      //deleteImage.src = "../imgs/delete_dark.png";
+      //deleteButton.appendChild(deleteImage);
+
+      cardNum.appendChild(deleteButton);
+      newCard.appendChild(cardNum);
+
+      const cardCont = document.createElement("div");
+      cardCont.classList.add("cardCont");
+      const wordInput = document.createElement("input");
+      wordInput.type = "text";
+      wordInput.name = "word";
+      wordInput.placeholder = "WORD";
+      const defInput = document.createElement("input");
+      defInput.type = "text";
+      defInput.name = "def";
+      defInput.placeholder = "DEFINITION";
+      cardCont.appendChild(wordInput);
+      cardCont.appendChild(defInput);
+      newCard.appendChild(cardCont);
+
+      return newCard;
+    }
+
+    // Function to add a new card
+    function addCard() {
+      const cards = document.querySelectorAll(".qdiv");
+      const newCard = createCard(cards.length);
+      listingDiv.appendChild(newCard);
+      updateElementCount();
+    }
+
+    // Function to delete a card
+    function deleteCard(event) {
+      const cardToDelete = event.target.closest(".qdiv");
+      if (cardToDelete) {
+        listingDiv.removeChild(cardToDelete);
+        updateElementCount();
+        updateCardIds();
+      }
+    }
+
+    // Function to update the element count
+    function updateElementCount() {
+      const numCards = document.querySelectorAll(".qdiv").length;
+      const elems = document.getElementById("elems");
+      elems.innerText = numCards + " Element" + (numCards !== 1 ? "s" : "");
+    }
+
+    // Function to update the card IDs
+    function updateCardIds() {
+      const cardIds = document.querySelectorAll(".qdiv .cardNum p");
+      cardIds.forEach((idElement, index) => {
+        idElement.innerText = index + 1;
+      });
+    }
+
+    // Attach event listeners
+    addNewWordButton.addEventListener("click", addCard);
+    listingDiv.addEventListener("click", function (event) {
+      if (event.target.classList.contains("delete")) {
+        deleteCard(event);
+      }
+    });
+
+    //add words to sessionstorage "words"
+
+    const saveBtn = document.getElementById("saveBtn");
+    saveBtn.addEventListener("click", function () {
+      const words = [];
+      const cards = document.querySelectorAll(".qdiv");
+      cards.forEach((card) => {
+        const word = card.querySelector(".cardCont input[name='word']").value;
+        const def = card.querySelector(".cardCont input[name='def']").value;
+        words.push({
+          word: word,
+          def: def,
+        });
+      });
+      sessionStorage.setItem("words", JSON.stringify(words));
+    });
+
+    //load words from sessionstorage "words"
+
+    const words = JSON.parse(sessionStorage.getItem("words"));
     if (words) {
-        for (let i = 0; i < words.length; i++) {
-            const newDiv = document.createElement("div")
-            newDiv.classList.add("qdiv")
-
-            const newHead = document.createElement("div")
-            newHead.classList.add("cardNum")
-            newHead.innerHTML = `<p id="id">${i + 1}</p> <button class="delete"><img src="../imgs/icons8-löschen-24.png"></button>`
-
-            const newContent = document.createElement("div")
-            newContent.classList.add("cardCont")
-            newContent.innerHTML = `<input type="text" name="word" id="textinput" placeholder="Word" value="${Object.keys(words[i])}">
-            <input type="text" name="def" id="textinput" placeholder="Definition" value="${Object.values(words[i])}">`
-
-            newDiv.appendChild(newHead)
-            newDiv.appendChild(newContent)
-            wordDiv.appendChild(newDiv)
-            elems.innerHTML = `${i + 1} Elements`
-            updateButtons(i)
-            val++;
-        }
+      words.forEach((word) => {
+        addCard();
+        const cards = document.querySelectorAll(".qdiv");
+        const lastCard = cards[cards.length - 1];
+        lastCard.querySelector(".cardCont input[name='word']").value = word.word;
+        lastCard.querySelector(".cardCont input[name='def']").value = word.def;
+      });
     }
-
-    updateButtons(0)
-
-    newWord.addEventListener("click", () => {
-        const newDiv = document.createElement("div")
-        newDiv.classList.add("qdiv")
-
-        const newHead = document.createElement("div")
-        newHead.classList.add("cardNum")
-        newHead.innerHTML = `<p id="id">${val}</p> <button class="delete"><img src="../imgs/icons8-löschen-24.png"></button>`
-
-        const newContent = document.createElement("div")
-        newContent.classList.add("cardCont")
-        newContent.innerHTML = `<input type="text" name="word" id="textinput" placeholder="Word">
-            <input type="text" name="def" id="textinput" placeholder="Definition">`
-
-        newDiv.appendChild(newHead)
-        newDiv.appendChild(newContent)
-        wordDiv.appendChild(newDiv)
-        elems.innerHTML = `${val} Elements`
-        updateButtons(val - 1)
-        val++;
-    })
-
-    function updateButtons(x) {
-        deletBtn[x].addEventListener("click", () => {
-            console.log(deletBtn[x].parentElement.children[0].textContent + " deleted")
-            deleteCard(parseInt(deletBtn[x].parentElement.children[0].textContent) - 1)
-        })
-    }
-
-    function deleteCard(n) {
-        wordDiv.removeChild(deletBtn[n].parentElement.parentElement)
-        for (let i = n; i < wordDiv.children.length; i++) {
-            wordDiv.children[i].children[0].children[0].textContent = i + 1
-        }
-    }
-
 </script>
 
 </html>

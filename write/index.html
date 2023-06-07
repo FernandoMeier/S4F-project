@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write mode</title>
+    <link rel="stylesheet" href="../../nav_style.css">
+
+    <nav>
+        <ul>
+            <li>
+                <a href="../home.html">
+                    Home*
+                </a>
+            </li>
+            <li>
+                <a href="../saved_data/Quizlet.html">
+                    Words*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/read_excel/index.html">
+                    Excel reader*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/card_flip/multiCards.html">
+                    Flashcards*
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Write*
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #f2f2f2;
+            z-index: 999;
+        }
+
+        #infos {
+            flex: 0 0 10%;
+            background-color: #eaeaea;
+            margin-top: 50px;
+        }
+
+        #content {
+            flex: 1;
+            padding: 20px;
+            margin-top: 50px;
+        }
+
+        #infos p, #infos progress {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="infos">
+        <p>progress:</p>
+        <progress id="progress" value="0" max="100"></progress>
+    </div>
+    <div id="content">
+        <h1>Writing mode</h1>
+        <p id="word"></p>
+        <input type="text" id="answer">
+        <button id="submit">Submit</button>
+        <p id="correctAnswer"></p>
+    </div>
+
+</body>
+<script>
+    const words = JSON.parse(sessionStorage.getItem("words"));
+    const submitBtn = document.getElementById("submit");
+    const progress = document.getElementById("progress");
+    let wordDisplay = document.getElementById("word");
+    let userAnswer = document.getElementById("answer");
+    let correctAnswer = document.getElementById("correctAnswer");
+    let currentWord = 0;
+
+    if (!words) {
+        alert("No words found, redirecting to home page. to add words go 'to excel reader*' or 'words*'");
+        window.location.href = "../../home.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        wordDisplay.innerHTML = words[currentWord].word;
+        correctAnswer.innerHTML = words[currentWord].def;
+        progress.max = words.length;
+    });
+
+    submitBtn.addEventListener("click", () => {
+        if (userAnswer.value == words[currentWord].def) {
+            alert("Correct!");
+            currentWord++;
+            progress.value++;
+            wordDisplay.innerHTML = words[currentWord].word;
+            correctAnswer.innerHTML = words[currentWord].def;
+            userAnswer.value = "";
+        } else {
+            alert("Incorrect, try again");
+        }
+    });
+</script>
+
+</html>

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excel Reading Test</title>
+    <link rel="stylesheet" href="../../nav_style.css">
 
     <style>
         #drop-area {
@@ -18,18 +19,33 @@
         }
     </style>
     <nav>
-        <a href="../../home.html">
-            <button id="nav-btn">Home*</button>
-        </a>
-        <a href="../../saved_data/Quizlet.html">
-            <button id="nav-btn">Words*</button>
-        </a>
-        <a href="#">
-            <button id="nav-btn">excel reader*</button>
-        </a>
-        <a href="../../test_site/card_flip/multiCards.html">
-            <button id="nav-btn">Flashcards*</button>
-        </a>
+        <ul>
+            <li>
+                <a href="../../home.html">
+                    Home*
+                </a>
+            </li>
+            <li>
+                <a href="../../saved_data/Quizlet.html">
+                    Words*
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Excel reader*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/card_flip/multiCards.html">
+                    Flashcards*
+                </a>
+            </li>
+            <li>
+                <a href="/write/index.html">
+                    Write*
+                </a>
+            </li>
+        </ul>
     </nav>
 </head>
 
@@ -40,7 +56,39 @@
     <form>
         <label for="excelfile">Select file to read</label><br>
         <input type="file" name="excelfile" id="excelfile" accept=".xlsx">
+        <button id="help">?</button>
     </form>
+    <dialog id="helpDialog">
+        <p>The excel file should be formatted like this:</p>
+        <table>
+            <tr>
+                <th></th>
+                <th>A</th>
+                <th>B</th>
+            </tr>
+            <tr>
+                <td><b>1</b></td>
+                <td>Word</td>
+                <td>Definition</td>
+            </tr>
+            <tr>
+                <td><b>2</b></td>
+                <td>Word</td>
+                <td>Definition</td>
+            </tr>
+            <tr>
+                <td><b>3</b></td>
+                <td>Word</td>
+                <td>Definition</td>
+            </tr>
+            <tr>
+                <td><b>...</b></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <button id="closeDialog">close</button>
+    </dialog>
 
     <div id="contents">
         <table id="wordList"></table>
@@ -116,12 +164,14 @@
 
             let worksheet = workbook.Sheets[workbook.SheetNames[0]];
             let excelData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            sessionStorage.clear()
 
             excelData.forEach(WSet => {
                 let r = WSet[0]
                 let v = WSet[1]
                 newWord = {
-                    [r]: v
+                    word: r,
+                    def: v
                 }
                 words = [...words, newWord]
             });
@@ -134,8 +184,8 @@
                 let cell1 = document.createElement("td")
                 let cell2 = document.createElement("td")
 
-                cell1.innerHTML = Object.keys(word)
-                cell2.innerHTML = Object.values(word)
+                cell1.innerHTML = word.word
+                cell2.innerHTML = word.def
 
                 row.appendChild(cell1)
                 row.appendChild(cell2)
@@ -144,6 +194,20 @@
         }
         reader.readAsArrayBuffer(file);
         sessionStorage.removeItem("words")
+    })
+
+    const helpBtn = document.getElementById("help")
+    const helpDialog = document.getElementById("helpDialog")
+    const closeDialog = document.getElementById("closeDialog")
+
+    helpBtn.addEventListener("click", (event) => {
+        helpDialog.showModal()
+        event.preventDefault()
+    })
+
+    closeDialog.addEventListener("click", (event) => {
+        helpDialog.close()
+        event.preventDefault()
     })
 </script>
 
