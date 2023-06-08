@@ -2,7 +2,11 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards</title>
+    <link rel="stylesheet" href="../../nav_style.css">
     <style>
         body {
             background-color: rgb(246, 247, 251);
@@ -14,6 +18,7 @@
             width: 800px;
             height: 400px;
             perspective: 1000px;
+            margin-top: 30px;
         }
 
         .card {
@@ -135,7 +140,7 @@
                 </a>
             </li>
             <li>
-                <a href="write/index.html">
+                <a href="../../write/index.html">
                     Write*
                 </a>
             </li>
@@ -196,8 +201,8 @@
 
             const btns = document.getElementsByClassName("fav")
 
-            front.innerText = Object.keys(words[currentCard]);
-            back.innerText = Object.values(words[currentCard]);
+            front.innerText = words[currentCard].word;
+            back.innerText = words[currentCard].def;
 
             for (let i = 0; i < btns.length; i++) {
                 btns[i].addEventListener("click", () => {
@@ -213,8 +218,8 @@
                 if (currentCard + 1 < words.length) {
                     currentCard++;
                     card.classList.remove("flipped")
-                    front.innerText = Object.keys(words[currentCard]);
-                    back.innerText = Object.values(words[currentCard]);
+                    front.innerText = words[currentCard].word;
+                    back.innerText = words[currentCard].def;
                 }
             });
 
@@ -222,8 +227,8 @@
                 if (currentCard > 0) {
                     currentCard--;
                     card.classList.remove("flipped")
-                    front.innerText = Object.keys(words[currentCard]);
-                    back.innerText = Object.values(words[currentCard]);
+                    front.innerText = words[currentCard].word;
+                    back.innerText = words[currentCard].def;
                 }
             });
         });

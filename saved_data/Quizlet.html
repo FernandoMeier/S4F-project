@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quizlet</title>
+    <title>Edit set</title>
     <link rel="stylesheet" href="../nav_style.css">
     <style>
         * {
@@ -80,7 +80,7 @@
             background-color: rgba(0, 0, 0, 0);
         }
 
-        #textinput {
+        .textinput {
             background-color: rgba(0, 0, 0, 0);
             border-top: 0;
             border-left: 0;
@@ -91,12 +91,12 @@
             transition: 150ms ease-out;
         }
 
-        #textinput:focus {
+        .textinput:focus {
             outline: none;
             border-bottom: 4px solid yellow;
         }
 
-        #textinput::placeholder {
+        .textinput::placeholder {
             font-weight: 500;
         }
 
@@ -144,7 +144,7 @@
                 </a>
             </li>
             <li>
-                <a href="write/index.html">
+                <a href="../write/index.html">
                     Write*
                 </a>
             </li>
@@ -153,7 +153,7 @@
 </head>
 
 <body>
-    <h2>New Set</h2>
+    <h2>Current Set</h2>
     <p id="elems">0 Elements</p>
     <div id="listingDiv">
         
@@ -196,10 +196,12 @@
       wordInput.type = "text";
       wordInput.name = "word";
       wordInput.placeholder = "WORD";
+      wordInput.classList.add("textinput");
       const defInput = document.createElement("input");
       defInput.type = "text";
       defInput.name = "def";
       defInput.placeholder = "DEFINITION";
+      defInput.classList.add("textinput");
       cardCont.appendChild(wordInput);
       cardCont.appendChild(defInput);
       newCard.appendChild(cardCont);
