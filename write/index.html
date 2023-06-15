@@ -56,6 +56,7 @@
             flex: 0 0 10%;
             background-color: #eaeaea;
             margin-top: 50px;
+            height: calc(100vh - 50px);
         }
 
         #content {
@@ -64,7 +65,8 @@
             margin-top: 50px;
         }
 
-        #infos p, #infos progress {
+        #infos p,
+        #infos progress {
             margin: 10px;
         }
 
@@ -100,6 +102,7 @@
     let wordDisplay = document.getElementById("word");
     let userAnswer = document.getElementById("answer");
     let correctAnswer = document.getElementById("correctAnswer");
+    let unanswered = words;
     let currentWord = 0;
 
     if (!words) {
@@ -108,21 +111,29 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        wordDisplay.innerHTML = words[currentWord].word;
-        correctAnswer.innerHTML = words[currentWord].def;
-        progress.max = words.length;
+        wordDisplay.innerHTML = unanswered[currentWord].word;
+        correctAnswer.innerHTML = unanswered[currentWord].def;
+        progress.max = unanswered.length;
     });
 
     submitBtn.addEventListener("click", () => {
-        if (userAnswer.value == words[currentWord].def) {
-            alert("Correct!");
-            currentWord++;
+        if (userAnswer.value.toLowerCase() === unanswered[currentWord].def.toLowerCase()) {
+            unanswered.splice(currentWord, 1);
             progress.value++;
-            wordDisplay.innerHTML = words[currentWord].word;
-            correctAnswer.innerHTML = words[currentWord].def;
+            if (unanswered.length === 0) {
+                alert("You have finished all the words, redirecting to home page.");
+                window.location.href = "../../home.html";
+            }
+            currentWord = Math.floor(Math.random() * unanswered.length);
+            wordDisplay.innerHTML = unanswered[currentWord].word;
+            correctAnswer.innerHTML = unanswered[currentWord].def;
             userAnswer.value = "";
+
         } else {
-            alert("Incorrect, try again");
+            currentWord = Math.floor(Math.random() * unanswered.length);
+            wordDisplay.innerHTML = unanswered[currentWord].word;
+            correctAnswer.innerHTML = unanswered[currentWord].def;
+            userAnswer.value = "";
         }
     });
 </script>

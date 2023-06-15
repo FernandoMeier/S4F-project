@@ -155,14 +155,8 @@
                 <div class="card-front">
                     <p id="front"><!--"key" value is inserted here--></p>
                 </div>
-                <div class="card-front" id="favDiv">
-                    <button class="fav"><img src="./star.png"></button><!--Star icon by https://icons8.com-->
-                </div>
                 <div class="card-back">
                     <p id="back"><!--"value" value is inserted here--></p>
-                </div>
-                <div class="card-back" id="favDiv">
-                    <button class="fav"><img src="./star.png"></button><!--Star icon by https://icons8.com-->
                 </div>
             </div>
         </div>
@@ -205,9 +199,7 @@
             back.innerText = words[currentCard].def;
 
             for (let i = 0; i < btns.length; i++) {
-                btns[i].addEventListener("click", () => {
-                    console.log("Success");
-                })
+                
             }
 
             card.addEventListener("click", function () {
