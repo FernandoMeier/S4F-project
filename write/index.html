@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Write mode</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/fav_q.png">
     <link rel="stylesheet" href="../../nav_style.css">
+    <title>Write mode</title>
 
     <nav>
         <ul>
@@ -26,7 +27,7 @@
                 </a>
             </li>
             <li>
-                <a href="../test_site/card_flip/multiCards.html">
+                <a href="../flashcards/multiCards.html">
                     Flashcards*
                 </a>
             </li>
@@ -78,6 +79,11 @@
         #correctAnswer:hover {
             background-color: whitesmoke;
         }
+
+        * {
+            font-family: sans-serif;
+            font-weight: lighter;
+        }
     </style>
 </head>
 
@@ -96,6 +102,7 @@
 
 </body>
 <script>
+    // define variables
     const words = JSON.parse(sessionStorage.getItem("words"));
     const submitBtn = document.getElementById("submit");
     const progress = document.getElementById("progress");
@@ -105,17 +112,20 @@
     let unanswered = words;
     let currentWord = 0;
 
+    // check if there are words, else redirect to home page
     if (!words) {
         alert("No words found, redirecting to home page. to add words go 'to excel reader*' or 'words*'");
         window.location.href = "../../home.html";
     }
 
+    // add event listeners
     document.addEventListener("DOMContentLoaded", () => {
         wordDisplay.innerHTML = unanswered[currentWord].word;
         correctAnswer.innerHTML = unanswered[currentWord].def;
         progress.max = unanswered.length;
     });
 
+    // check if answer is correct,if so, remove word from repertoire and add 1 to progress, else continue
     submitBtn.addEventListener("click", () => {
         if (userAnswer.value.toLowerCase() === unanswered[currentWord].def.toLowerCase()) {
             unanswered.splice(currentWord, 1);

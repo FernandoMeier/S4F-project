@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel Reading Test</title>
+    <link rel="icon" type="image/x-icon" href="/imgs/fav_q.png">
     <link rel="stylesheet" href="../../nav_style.css">
+    <title>Excel Reading Test</title>
 
     <style>
         #drop-area {
@@ -16,6 +17,11 @@
             border-style: dashed;
             text-align: center;
             background-color: rgba(125, 120, 120, 0);
+        }
+
+        * {
+            font-family: sans-serif;
+            font-weight: lighter;
         }
     </style>
     <nav>
@@ -36,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="../card_flip/multiCards.html">
+                <a href="../../flashcards/multiCards.html">
                     Flashcards*
                 </a>
             </li>
@@ -98,7 +104,16 @@
 <script>
     const droparea = document.getElementById("drop-area");
     const fileInput = document.getElementById("excelfile");
-    const contents = document.getElementById("contents")
+    const contents = document.getElementById("contents");
+
+    if (localStorage.getItem("words")) {
+        let use = confirm("Use words from last session?")
+        if (use) {
+            sessionStorage.setItem("words", localStorage.getItem("words"))
+        } else {
+            localStorage.removeItem("words") 
+        }
+    }
 
     droparea.addEventListener("dragover", (event) => {
         event.stopPropagation()
@@ -176,6 +191,7 @@
                 words = [...words, newWord]
             });
             sessionStorage.setItem("words", JSON.stringify(words))
+            localStorage.setItem("words", JSON.stringify(words))
 
             let wordList = document.getElementById("wordList")
 
