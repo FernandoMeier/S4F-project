@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/nav_style.css">
+	<title>Learn</title>
+	<nav>
+		<ul>
+			<li>
+				<a href="#">
+					Home*
+				</a>
+			</li>
+			<li>
+				<a href="./saved_data/Quizlet.html">
+					Current set*
+				</a>
+			</li>
+			<li>
+				<a href="../test_site/read_excel/index.html">
+					Excel reader*
+				</a>
+			</li>
+			<li>
+				<a href="./flashcards/multiCards.html">
+					Flashcards*
+				</a>
+			</li>
+			<li>
+				<a href="write/index.html">
+					Write*
+				</a>
+			</li>
+			<li>
+				<a href="/learn/index.html">
+					Learn*
+				</a>
+			</li>
+		</ul>
+	</nav>
+</head>
+<style>
+	body {
+		background-color: rgb(246, 247, 251);
+		margin: 0;
+	}
+
+	.card-container {
+		position: relative;
+		width: 800px;
+		height: 400px;
+		perspective: 1000px;
+		margin-top: 30px;
+	}
+
+	.card {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform-style: preserve-3d;
+		transition: transform 0.3s cubic-bezier(.37, -0.02, .69, 1.8);
+	}
+
+	.card.flipped {
+		transform: rotateX(180deg);
+	}
+
+	.card-front,
+	.card-back {
+		box-sizing: border-box;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		padding: 20px;
+		text-align: center;
+		font-size: 2em;
+		font-weight: bold;
+		color: black;
+		background-color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.card-back {
+		transform: rotateX(180deg);
+		background-color: white;
+	}
+
+	.UI {
+		display: flex;
+		width: 100vw;
+		height: 100vh;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	#buttons {
+		width: max-content;
+	}
+
+	* {
+		user-select: none;
+		font-family: sans-serif;
+		font-weight: lighter;
+	}
+
+	#repeat,
+	#understood {
+		width: 400px;
+		height: 50px;
+		max-width: 400px;
+		border: 0;
+		background-color: rgb(255, 255, 255);
+		text-align: center;
+		box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+		margin-top: 20px;
+		border-radius: 7px;
+	}
+
+	#content {
+		flex: 1;
+		padding: 20px;
+		margin-top: 50px;
+	}
+
+	#correctAnswer {
+		background-color: black;
+		width: fit-content;
+	}
+
+	#correctAnswer:hover {
+		background-color: whitesmoke;
+	}
+</style>
+
+<body>
+	<h1>Learn</h1>
+	<div id="content"></div>
+</body>
+<script>
+	const container = document.getElementById("content");
+	const words = JSON.parse(sessionStorage.getItem("words"));
+
+	if (!words) {
+		alert("You have not selected a set yet. Please go to the home page and select a set.")
+		window.location.href = "../home.html";
+	}
+
+	function flashcardRounds() {
+		container.innerHTML = `<div class="UI">
+        <div class="card-container">
+            <div class="card">
+                <div class="card-front">
+                    <p id="front"></p>
+                </div>
+                <div class="card-back">
+                    <p id="back"></p>
+                </div>
+            </div>
+        </div>
+        <div id="buttons">
+            <button id="repeat">Repeat</button>
+            <button id="understood">Got it</button>
+        </div>
+    </div>`;
+		document.addEventListener("DOMContentLoaded", () => {
+			let currentCard = 0;
+
+			const word = {
+				key: "definition",
+				value: "value",
+				starred: false
+			}
+
+			let card = document.querySelector(".card");
+			let understood = document.getElementById("understood");
+			let repeat = document.getElementById("repeat");
+
+			let front = document.getElementById("front");
+			let back = document.getElementById("back");
+
+			const btns = document.getElementsByClassName("fav")
+
+			front.innerText = words[currentCard].word;
+			back.innerText = words[currentCard].def;
+
+			for (let i = 0; i < btns.length; i++) {
+
+			}
+
+			card.addEventListener("click", function () {
+				card.classList.toggle("flipped");
+			});
+
+			understood.addEventListener("click", () => {
+				if (words.length == 0) {
+					alert("You have finished the set!")
+					multipleChoice();
+				} else {
+					words.splice(currentCard, 1);
+					card.classList.remove("flipped")
+					currentCard = Math.floor(Math.random() * words.length);
+					front.innerText = words[currentCard].word;
+					back.innerText = words[currentCard].def;
+				}
+			});
+
+			repeat.addEventListener("click", () => {
+				if (currentCard >= 0) {
+					card.classList.remove("flipped")
+					currentCard = Math.floor(Math.random() * words.length);
+					console.log(currentCard)
+					front.innerText = words[currentCard].word;
+					back.innerText = words[currentCard].def;
+				}
+			});
+		});
+	}
+	function multipleChoice() {
+		container.removeChild(document.querySelector(".UI"));
+		alert("Multiple choice mode is not yet implemented. Please use the flashcard mode.")
+		container.innerHTML = '<button id="continue">Continue</button>'
+		document.getElementById("continue").addEventListener("click", () => {
+			writeRounds();
+		})
+	}
+	function writeRounds() {
+		container.innerHTML = ""
+	}
+
+	flashcardRounds();
+</script>
+</html>
