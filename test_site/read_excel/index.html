@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="../../flashcards/multiCards.html">
+                <a href="../../flashcards/generate.html">
                     Flashcards*
                 </a>
             </li>
@@ -141,10 +141,13 @@
                 let r = WSet[0]
                 let v = WSet[1]
                 newWord = {
-                    [r]: v
+                    word: r,
+                    def: v
                 }
                 words = [...words, newWord]
             });
+            sessionStorage.setItem("words", JSON.stringify(words))
+            localStorage.setItem("words", JSON.stringify(words))
 
             let wordList = document.getElementById("wordList")
 
