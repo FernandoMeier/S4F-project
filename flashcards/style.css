@@ -1,0 +1,84 @@
+body {
+    background-color: rgb(246, 247, 251);
+    margin: 0;
+}
+
+.card-container {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    perspective: 1000px;
+    margin-top: 30px;
+}
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(.37, -0.02, .69, 1.8);
+}
+
+.card.flipped {
+    transform: rotateX(180deg);
+}
+
+.card-front,
+.card-back {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-back {
+    transform: rotateX(180deg);
+    background-color: white;
+}
+
+.UI {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+#buttons {
+    width: max-content;
+}
+
+* {
+    user-select: none;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+#repeat,
+#understood {
+    width: 400px;
+    height: 50px;
+    max-width: 400px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border-radius: 7px;
+}

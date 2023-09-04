@@ -12,13 +12,13 @@
     <nav>
         <ul>
             <li>
-                <a href="../home.html">
+                <a href="../mainpage.html">
                     Home*
                 </a>
             </li>
             <li>
-                <a href="../saved_data/Quizlet.html">
-                    Words*
+                <a href="../saved_data/current_set.html">
+                    Current set*
                 </a>
             </li>
             <li>
@@ -115,7 +115,7 @@
     // check if there are words, else redirect to home page
     if (!words) {
         alert("No words found, redirecting to home page. to add words go 'to excel reader*' or 'words*'");
-        window.location.href = "../../home.html";
+        window.location.href = "../../mainpage.html";
     }
 
     // add event listeners
@@ -132,7 +132,7 @@
             progress.value++;
             if (unanswered.length === 0) {
                 alert("You have finished all the words, redirecting to home page.");
-                window.location.href = "../../home.html";
+                window.location.href = "../../mainpage.html";
             }
             currentWord = Math.floor(Math.random() * unanswered.length);
             wordDisplay.innerHTML = unanswered[currentWord].word;

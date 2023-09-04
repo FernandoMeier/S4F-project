@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/imgs/fav_q.png">
+    <link rel="stylesheet" href="nav_style.css">
+    <title>Quizlet, but better</title>
+    <nav>
+        <ul>
+            <li>
+                <a href="#">
+                    Home*
+                </a>
+            </li>
+            <li>
+                <a href="./saved_data/current_set.html">
+                    Current set*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/read_excel/index.html">
+                    Excel reader*
+                </a>
+            </li>
+            <li>
+                <a href="./flashcards/generate.html">
+                    Flashcards*
+                </a>
+            </li>
+            <li>
+                <a href="write/index.html">
+                    Write*
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <style>
+        h2 {
+            margin-top: 0;
+            margin-left: 7px;
+        }
+
+        h1,
+        h4 {
+            width: 100%;
+            text-align: center;
+        }
+
+        * {
+            font-family: sans-serif;
+            font-weight: lighter;
+        }
+
+        #container {
+            width: 100%;
+        }
+
+        .cell {
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgb(221, 221, 221);
+            border-radius: 15px;
+        }
+
+        #locked {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Welcome to Quizlet4all!</h1>
+    <h4>A free learning tool with no paywalls or annoying advertisements</h4>
+
+    <h2>Navigation:</h2>
+
+    <div id="container">
+        <div class="cell">
+            <h3>Home</h3>
+            <p>This is where you are now.</p>
+        </div>
+        <div class="cell">
+            <h3>Current set</h3>
+            <p>Edit, create, delete or just look at your current set of words.</p>
+        </div>
+        <div class="cell">
+            <h3>Excel Reader</h3>
+            <p>Upload an excel file that gets converted into a new set (for more infos click the "?" button).</p>
+        </div>
+        <div class="cell">
+            <h3>Flashcards</h3>
+            <p>It's best to start your practice here, see the word and by clicking on the card flip it to see the
+                definition.</p>
+        </div>
+        <div class="cell">
+            <h3>Write</h3>
+            <p>Practice by writing, you get the word and have to enter the definition, the black box on the bottom is
+                the
+                solution in case you dont know it.</p>
+        </div>
+        <div class="cell">
+            <h3>Learning <img src="/imgs/locked.png" alt="lock icon" id="locked"></h3>
+            <p>Here you can do the flashcards first, then a multiple choice mode and finish with a writing mode, this
+                page is not ready yet so you will not be able to access it.</p>
+        </div>
+    </div>
+
+</body>
+</html>
