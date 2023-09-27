@@ -1,0 +1,194 @@
+body {
+    background-color: rgb(246, 247, 251);
+    margin: 0;
+}
+
+.card-container {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    perspective: 1000px;
+    margin-top: 30px;
+}
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.3s cubic-bezier(.37, -0.02, .69, 1.8);
+}
+
+.card.flipped {
+    transform: rotateX(180deg);
+}
+
+.card-front,
+.card-back {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-back {
+    transform: rotateX(180deg);
+    background-color: white;
+}
+
+.UI {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    flex-direction: column;
+}
+
+#buttons {
+    width: max-content;
+}
+
+* {
+    user-select: none;
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+#repeat,
+#understood {
+    width: 400px;
+    height: 50px;
+    max-width: 400px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border-radius: 7px;
+}
+
+#repeat:hover, #understood:hover {
+    cursor: pointer;
+}
+
+#repeat:active, #understood:active {
+    background-color: rgb(230, 230, 230);
+}
+
+.progress {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+progress {
+    width: 100%;
+    height: 40px;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #eeeeee;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #28badf !important;
+    border-radius: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#next-round {
+    width: 100px;
+    height: 50px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border-radius: 7px;
+}
+
+#next-round:hover {
+    cursor: pointer;
+}
+
+#next-round:active {
+    background-color: rgb(230, 230, 230);
+}
+
+.multiple-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+}
+
+.multiple-choice button {
+    width: 49%;
+    height: 50px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border-radius: 7px;
+}
+
+.multiple-choice button:hover {
+    cursor: pointer;
+}
+
+.multiple-choice button:active {
+    background-color: rgb(230, 230, 230);
+}
+
+.answers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.question {
+    width: 100%;
+    height: 200px;
+    border: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
+    border-radius: 7px;
+    margin: 10px;
+    font-size: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

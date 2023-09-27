@@ -1,11 +1,13 @@
 const container = document.getElementById('container');
-    let words = JSON.parse(sessionStorage.getItem("words"));
-    if (!words) {
-        alert("No words found, redirecting to home page. to add words go to 'excel reader*' or 'current set*'");
-        window.location.href = "../../mainpage.html";
-    }
+let words = JSON.parse(sessionStorage.getItem("words"));
 
-    container.innerHTML = `<div class="UI">
+if (!words) {
+    alert("No words found, redirecting to home page. to add words go to 'excel reader*' or 'current set*'");
+    window.location.href = "../../index.html";
+}
+
+container.innerHTML = `
+    <div class="UI">
         <div class="card-container">
             <div class="card">
                 <div class="card-front">
@@ -21,46 +23,47 @@ const container = document.getElementById('container');
             <button id="understood">Got it</button>
         </div>
     </div>`;
-    document.addEventListener("DOMContentLoaded", () => {
-        let currentCard = 0;
 
-        let card = document.querySelector(".card");
-        let understood = document.getElementById("understood");
-        let repeat = document.getElementById("repeat");
+document.addEventListener("DOMContentLoaded", () => {
+    let currentCard = 0;
 
-        let front = document.getElementById("front");
-        let back = document.getElementById("back");
+    let card = document.querySelector(".card");
+    let understood = document.getElementById("understood");
+    let repeat = document.getElementById("repeat");
 
-        const btns = document.getElementsByClassName("fav")
+    let front = document.getElementById("front");
+    let back = document.getElementById("back");
 
-        front.innerText = words[currentCard].word;
-        back.innerText = words[currentCard].def;
+    const btns = document.getElementsByClassName("fav")
 
-        for (let i = 0; i < btns.length; i++) {
+    front.innerText = words[currentCard].word;
+    back.innerText = words[currentCard].def;
 
-        }
+    for (let i = 0; i < btns.length; i++) {
 
-        card.addEventListener("click", function () {
-            card.classList.toggle("flipped");
-        });
+    }
 
-        understood.addEventListener("click", () => {
-            if (currentCard + 1 <= words.length) {
-                words.splice(currentCard, 1);
-                card.classList.remove("flipped")
-                currentCard = Math.floor(Math.random() * words.length);
-                front.innerText = words[currentCard].word;
-                back.innerText = words[currentCard].def;
-            }
-        });
-
-        repeat.addEventListener("click", () => {
-            if (currentCard >= 0) {
-                card.classList.remove("flipped")
-                currentCard = Math.floor(Math.random() * words.length);
-                console.log(currentCard)
-                front.innerText = words[currentCard].word;
-                back.innerText = words[currentCard].def;
-            }
-        });
+    card.addEventListener("click", function () {
+        card.classList.toggle("flipped");
     });
+
+    understood.addEventListener("click", () => {
+        if (currentCard + 1 <= words.length) {
+            words.splice(currentCard, 1);
+            card.classList.remove("flipped")
+            currentCard = Math.floor(Math.random() * words.length);
+            front.innerText = words[currentCard].word;
+            back.innerText = words[currentCard].def;
+        }
+    });
+
+    repeat.addEventListener("click", () => {
+        if (currentCard >= 0) {
+            card.classList.remove("flipped")
+            currentCard = Math.floor(Math.random() * words.length);
+            console.log(currentCard)
+            front.innerText = words[currentCard].word;
+            back.innerText = words[currentCard].def;
+        }
+    });
+});

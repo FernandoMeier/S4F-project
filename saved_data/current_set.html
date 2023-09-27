@@ -27,6 +27,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding-bottom: 20px;
         }
 
         #addNewWord, #saveBtn {
@@ -39,6 +40,15 @@
             border-radius: 8px;
             font-weight: bold;
             text-align: center;
+        }
+
+        #addNewWord:hover, #saveBtn:hover {
+            cursor: pointer;
+            background-color: #2e3dcf;
+        }
+
+        #addNewWord:active, #saveBtn:active {
+            background-color: #161f70;
         }
 
         .qdiv {
@@ -264,6 +274,7 @@
             });
         });
         sessionStorage.setItem("words", JSON.stringify(words));
+        localStorage.setItem("words", JSON.stringify(words));
     });
 
     //load words from sessionstorage "words"

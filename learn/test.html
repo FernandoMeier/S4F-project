@@ -1,11 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Mode</title>
+    <link rel="stylesheet" href="/nav_style.css">
+    <link rel="stylesheet" href="./flashstyle.css">
+    <title>Learn</title>
+    <nav>
+        <ul>
+            <li>
+                <a href="../index.html">
+                    Home*
+                </a>
+            </li>
+            <li>
+                <a href="../saved_data/current_set.html">
+                    Current set*
+                </a>
+            </li>
+            <li>
+                <a href="../test_site/read_excel/index.html">
+                    Excel reader*
+                </a>
+            </li>
+            <li>
+                <a href="../flashcards/generate.html">
+                    Flashcards*
+                </a>
+            </li>
+            <li>
+                <a href="../write/index.html">
+                    Write*
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    Learn*
+                </a>
+            </li>
+        </ul>
+    </nav>
 </head>
+
 <body>
-    <h1></h1>
+    <h1>Learn</h1>
+    <div id="container"></div>
 </body>
+<style>
+    .UI {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    progress {
+        width: 100%;
+        height: 40px;
+    }
+
+    progress::-webkit-progress-bar {
+        background-color: #eeeeee;
+        border-radius: 10px;
+    }
+
+    progress::-webkit-progress-value {
+        background-color: #28badf !important;
+        border-radius: 10px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #next-round {
+        width: 100px;
+        height: 50px;
+    }
+</style>
+<script>
+    const container = document.getElementById('container');
+
+    container.innerHTML = `
+    <div class="UI">
+        <div class="progress">
+            <p>Progress</p>
+            <progress class="progress-bar" value="0" max="100"></progress>
+        </div>
+        <div class="buttons">
+            <button id="next-round">Next Round</button>
+        </div>
+    </div>`;
+    thing = 0;
+    document.getElementById('next-round').addEventListener('click', () => {
+        thing += 20;
+        if (thing > 100) {
+            thing = 0;
+        }
+        document.querySelector('.progress-bar').value = thing;
+    });
+</script>
+
 </html>
